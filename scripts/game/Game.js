@@ -5,7 +5,7 @@ import QuantumMechanics from './QuantumMechanics.js';
 import GameBoard from '../ui/GameBoard.js';
 import ScoreDisplay from '../ui/ScoreDisplay.js';
 import MenuSystem from '../ui/MenuSystem.js';
-import { INITIAL_SPEED, SPEED_INCREMENT, POINTS_PER_FOOD, SUPERPOSITION_BONUS, GAME_STATES, KEY_CODES, WIN_SCORE } from '../utils/Constants.js';
+import { GRID_SIZE, CELL_SIZE, INITIAL_SPEED, SPEED_INCREMENT, POINTS_PER_FOOD, SUPERPOSITION_BONUS, GAME_STATES, KEY_CODES, WIN_SCORE } from '../utils/Constants.js';
 
 class Game {
     constructor() {
@@ -22,6 +22,7 @@ class Game {
         this.lastRenderTime = 0;
 
         this.setupEventListeners();
+        this.resizeGameContainer();
     }
 
     setupEventListeners() {
@@ -31,6 +32,14 @@ class Game {
         this.snake.on('collision', this.endGame.bind(this));
         this.food.on('consumed', this.handleFoodConsumption.bind(this));
         this.food.on('noSpaceLeft', this.handleWin.bind(this));
+        window.addEventListener('resize', this.resizeGameContainer.bind(this));
+    }
+
+    resizeGameContainer() {
+        const gameContainer = document.getElementById('game-container');
+        const size = GRID_SIZE * CELL_SIZE;
+        gameContainer.style.width = `${size}px`;
+        gameContainer.style.height = `${size}px`;
     }
 
     startGame() {

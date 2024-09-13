@@ -9,8 +9,11 @@ class GameBoard {
     }
 
     setupCanvas() {
-        this.canvas.width = GRID_SIZE * CELL_SIZE;
-        this.canvas.height = GRID_SIZE * CELL_SIZE;
+        const size = GRID_SIZE * CELL_SIZE;
+        this.canvas.width = size;
+        this.canvas.height = size;
+        this.container.style.width = `${size}px`;
+        this.container.style.height = `${size}px`;
         this.container.appendChild(this.canvas);
     }
 
